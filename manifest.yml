@@ -1,0 +1,26 @@
+# The file is an application deployment descriptor. This means that it contains information needed to deploy 
+# the application on cloud doundry e.g. name of the application, path to the application, etc.
+
+# It is not needed. The file is optional. Although using the file is helpful so that we don't 
+# have to give the application name, path etc in the cli command when deploying the file every time. 
+# The cf push command looks for a manifest.yml file in the directory from where the push command is 
+# executed and uses the deployment values from this file.
+---
+applications:
+- name: flaskApp01
+  routes:
+    # unique_application_name.api_endpoint
+    - route: flaskApp01.cfapps.us10-001.hana.ondemand.com
+  path: ./
+  # RAM
+  memory: 128M
+  # disk size 
+  disk-quota: 512M
+  # buildpack details
+  buildpack: python_buildpack
+  # main python file 
+  command: python application.py
+  services:
+    # creating the service & binding it
+    # cf create-service hana securestore pyhana
+    - pyhana
