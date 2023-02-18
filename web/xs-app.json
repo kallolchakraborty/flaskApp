@@ -1,0 +1,10 @@
+{
+    "routes": [
+      {
+        "source": "^/flaskApp01/(.*)$",
+        "target": "$1",
+        "destination": "flaskApp01"
+      }
+    ]
+  }
+  

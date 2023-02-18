@@ -10,7 +10,7 @@ applications:
 - name: flaskApp01
   routes:
     # unique_application_name.api_endpoint
-    - route: flaskApp01.cfapps.us10-001.hana.ondemand.com
+    - route: flaskApp01.cfapps.us30.hana.ondemand.com
   path: ./
   # RAM
   memory: 128M
@@ -24,3 +24,23 @@ applications:
     # creating the service & binding it
     # cf create-service hana securestore pyhana
     - pyhana
+    # cf create-service xsuaa application pyuaa -c xs-security.json
+    - pyuaa
+
+- name: webUI01
+  routes:
+    - route: webUI01.cfapps.us30.hana.ondemand.com
+  path: web
+  memory: 128M
+  disk-quota: 512M
+  env:
+    destinations: >
+      [
+        {
+          "name":"flaskApp01",
+          "url":"https://flaskApp01.cfapps.us30.hana.ondemand.com",
+          "forwardAuthToken": true
+        }
+      ]
+  services:
+  - pyuaa
